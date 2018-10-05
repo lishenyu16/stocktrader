@@ -13,13 +13,13 @@
                         type="number"
                         class="form-control"
                         placeholder="Quantity"
-                        v-model="quantity"
+                        v-model.number="quantity"
                         >
                 </div>
                 <div class="pull-right">
                     <button 
                     class="btn btn-success" 
-                    @click="buy"
+                    @click="buyStock"
                     :disabled="quantity<=0 || isNaN(quantity)"
                     >Buy</button>
                 </div>
@@ -38,13 +38,15 @@
             }
         },
         methods: {
-            buy() {
+            buyStock() {
                 const order = {
                     stockId: this.stock.id,
                     stockPrice: this.stock.price,
-                    stockQuantity: this.quantity
+                    stockQuantity: parseInt(this.quantity)
                 }
+                console.log(typeof(order.stockQuantity))
                 console.log(order)
+                this.$store.dispatch('buyStock',order)
                 this.quantity=0
             }
         },
