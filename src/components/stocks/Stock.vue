@@ -14,19 +14,26 @@
                         class="form-control"
                         placeholder="Quantity"
                         v-model.number="quantity"
+                        :class="{danger:insufficientFunds}"
                         >
                 </div>
                 <div class="pull-right">
                     <button 
                     class="btn btn-success" 
                     @click="buyStock"
-                    :disabled="quantity<=0 || isNaN(quantity)"
-                    >Buy</button>
+                    :disabled="insufficientFunds || quantity<=0 || isNaN(quantity)"
+                    >{{insufficientFunds? 'Lack Funds':'Buy'}}</button>
                 </div>
             </div>
         </div>
     </div>
 </template>
+<style  scoped>
+    .danger{
+            border: 1px solid red;
+        }
+</style>
+    
 <script>
     export default {
         props:[
@@ -37,6 +44,11 @@
                 quantity: 0
             }
         },
+        computed: {
+            insufficientFunds() {
+                return this.quantity*this.stock.price > this.$store.getters.funds
+            }
+        },
         methods: {
             buyStock() {
                 const order = {
@@ -44,8 +56,6 @@
                     stockPrice: this.stock.price,
                     stockQuantity: parseInt(this.quantity)
                 }
-                console.log(typeof(order.stockQuantity))
-                console.log(order)
                 this.$store.dispatch('buyStock',order)
                 this.quantity=0
             }
