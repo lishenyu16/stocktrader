@@ -3,7 +3,18 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import { routes } from './routes'
 import store from "./store/store"
+import axios from 'axios'
 
+axios.defaults.baseURL = 'https://vuejs-stock-trader-d1eb5.firebaseio.com'
+// axios.defaults.headers.common['Authorization']= ''
+// axios.defaults.headers.get['Accepts'] = 'application/json'
+
+const reqInterceptor = axios.interceptors.request.use(config=> {
+  return config
+})
+const resInterceptor = axios.interceptors.response.use(res=> {
+  return res
+})
 
 Vue.use(VueRouter);
 
