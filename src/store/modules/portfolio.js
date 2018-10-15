@@ -1,6 +1,7 @@
 const state = {
     funds :10000,
-    stocks:[]
+    stocks:[],
+    totalValue:0
 }
 
 const mutations = {
@@ -26,6 +27,7 @@ const mutations = {
     },
     SET_PORTFOLIO(state,portfolio){
         state.funds = portfolio.funds
+        state.totalValue = portfolio.totalValue
         state.stocks = portfolio.stockPortfolio?portfolio.stockPortfolio:[]
     }
 }
@@ -56,7 +58,8 @@ const getters = {
     },
     funds(state){
         return state.funds
-    }
+    },
+
 }
 
 export default {

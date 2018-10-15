@@ -1,12 +1,30 @@
 import stocks from '../../data/stocks'
+import axios from "axios"
 
 const state = {
-    stocks:[]
+    stocks:[],
+    totalValue:0
 }
 
 const mutations = {
     'SET_STOCKS'(state,stocks) {
-        state.stocks = stocks
+        // state.stocks = stocks
+        axios.get('/data.json')
+        .then((res)=>{
+            if(res.data){
+                const stocks = res.data.stocks
+                const stockPortfolio = res.data.stockPortfolio
+                state.stocks = stocks
+                let totalValue = 0
+                for(let i in stockPortfolio){
+                    totalValue+=stockPortfolio[i].price*stockPortfolio[i].quantity
+                }
+                state.totalValue = totalValue
+            }
+            else{
+                console.log("no datas")
+            }
+        })
     },
     'RND_STOCKS'(state) {
         state.stocks.forEach(stock => {
@@ -30,6 +48,9 @@ const actions = {
 const getters = {
     stocks: state => {
         return state.stocks;
+    },
+    totalValue(state){
+        return state.totalValue
     }
 }
 
