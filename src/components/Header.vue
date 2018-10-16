@@ -10,8 +10,6 @@
                 <ul class="nav navbar-nav">
                     <router-link tag="li" to="/portfolio" activeClass="active"><a>Portfolio</a></router-link>
                     <router-link tag="li" to="/stocks" activeClass="active"><a>Stocks</a></router-link>
-                    <router-link tag="li" to="/stocks" activeClass="active"><a>Test</a></router-link>
-
                 </ul>
                 <strong class="navbar-text navbar-right">Funds: {{funds | currency}}</strong>
                 <ul class="nav navbar-nav navbar-right">
